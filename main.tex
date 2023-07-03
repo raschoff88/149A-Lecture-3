@@ -1,0 +1,336 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amsthm,amssymb,color,latexsym,stmaryrd}
+
+
+
+% theorem/proposition/etc.
+%
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{teor}[theorem]{Theorem}
+\newtheorem{assumption}[theorem]{Assumption}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{foo}[theorem]{Remarks}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{ack}[theorem]{Acknowledgements}
+\newtheorem{remark}[theorem]{Remark}\newenvironment{Example}{\begin{example}\rm}{\end{example}}
+\newenvironment{Examples}{\begin{examples}\rm}{\end{examples}}
+\newenvironment{Remark}{\begin{remark}\rm}{\end{remark}}
+\newenvironment{Remarks}{\begin{foo}\rm}{\end{foo}}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\let\Section=\section
+\def\section{\setcounter{equation}{0}\Section}
+
+
+%
+% Qi's brackets, norms etc
+%
+\newcommand{\ang}[1]{\left<#1\right>}  % angular brackets for projection
+\newcommand{\brak}[1]{\left(#1\right)}    % round brackets
+\newcommand{\crl}[1]{\left\{#1\right\}}   % curly brackets
+\newcommand{\edg}[1]{\left[#1\right]}     % edgy brackets
+\newcommand{\E}[1]{{\rm E}\left[#1\right]}
+\newcommand{\var}[1]{{\rm Var}\left(#1\right)}
+\newcommand{\abs}[1]{\left|#1\right|}     % absolute value
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Samy's macro %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\ckf}{\check{f}}
+\newcommand{\cov}{\text{\bf{Cov}}}
+\newcommand{\di}{\diamond}
+\newcommand{\dom}{\mbox{Dom}}
+\newcommand{\dw}{\dot{W}}
+\newcommand{\hb}[1]{\textcolor{blue}{#1}}
+\newcommand{\hm}{\hat{M}}
+\newcommand{\hsi}{\hat{\sigma}}
+\newcommand{\id}{\mbox{Id}}
+\newcommand{\iou}{\int_{0}^{1}}
+\newcommand{\iot}{\int_{0}^{t}}
+\newcommand{\iott}{\int_0^T}
+\newcommand{\ist}{\int_{s}^{t}}
+\newcommand{\mathd}{\mathrm{d}}
+\newcommand{\ot}{[0,t]}
+\newcommand{\ott}{[0,T]}
+\newcommand{\ou}{[0,1]}
+\newcommand{\1}{{\bf 1}}
+\newcommand{\2}{{\bf 2}}
+\newcommand{\tss}{\textsuperscript}
+\newcommand{\txx}{\textcolor}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Mathbb %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\C}{\mathbb C}
+\newcommand{\D}{\mathbb D}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\be}{\mathbb E}
+\newcommand{\bp}{\mathbb{P}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Mathbf %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ba}{\mathbf{A}}
+\newcommand{\bb}{\mathbf{B}}
+%\newcommand{\be}{\mathbf{E}}
+\newcommand{\bg}{\mathbf{G}}
+\newcommand{\bw}{\mathbf{w}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% Calligraphic %%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ca}{\mathcal A}
+\newcommand{\cb}{\mathcal B}
+\newcommand{\cac}{\mathcal C}
+\newcommand{\hcac}{\hat {\mathcal C}}
+\newcommand{\ce}{\mathcal E}
+\newcommand{\cf}{\mathcal F}
+\newcommand{\cg}{\mathcal G}
+\newcommand{\ch}{\mathcal H}
+\newcommand{\ci}{\mathcal I}
+\newcommand{\cj}{\mathcal J}
+\newcommand{\ck}{\mathcal K}
+\newcommand{\cl}{\mathcal L}
+\newcommand{\cm}{\mathcal M}
+\newcommand{\cn}{\mathcal N}
+\newcommand{\cq}{\mathcal Q}
+\newcommand{\cs}{\mathcal S}
+\newcommand{\ct}{\mathcal T}
+\newcommand{\cu}{\mathcal U}
+\newcommand{\cv}{\mathcal V}
+\newcommand{\cw}{\mathcal W}
+\newcommand{\cz}{\mathcal Z}
+\newcommand{\crr}{\mathcal R}
+\newcommand{\HH}{\mathfrak H}
+
+\newcommand{\bld}{\textbf}
+
+\title{149A Lecture 3}
+\author{Prof Ryan Aschoff}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Conditional Probability and Independence}
+\subsection{Conditional Probability}
+Let the probability set function $P(A)$ be defined on the sample space $C$, and let $A$ be a subset of $C$ such that $P(A) > 0$. We will consider only those outcomes of the random experiment that are elements of $A$; in essence, then, we take $A$ to be a sample space. Let $B$ be another subset of $C$. How, relative to the new sample space $A$, do we want to define the probability of the event $B$? Once defined, this probability is called the conditional probability of the event $B$, relative to the hypothesis of the event $A$, or, more briefly, the conditional probability of $B$ given $A$. Such a conditional probability is denoted by the symbol $P(B|A)$. The $"|"$ in this symbol is usually read as "given."
+Since $A$ is now the sample space, the only elements of $B$ that concern us are those, if any, that are also elements of $A$, that is, the elements of $A \cap B$. It seems desirable, then, to define the symbol $P(B|A)$ in such a way that
+\[
+P(A|A) = 1 \quad \text{and} \quad P(B|A) = P(A \cap B|A).
+\]
+\begin{definition}[Conditional Probability] Let $B$ and $A$ be events with $P(A) > 0$. Then we define the conditional probability of $B$ given $A$ as
+\[
+P(B|A) = \frac{P(A \cap B)}{P(A)}.
+\]
+Moreover, we have:
+\begin{enumerate}
+    \item $P(B|A) \geq 0$.
+    \item $P(A|A) = 1$.
+    \item $P\left(\bigcup_{n=1}^{\infty} B_n | A\right) = \sum_{n=1}^{\infty} P(B_n | A)$, provided that $B_1, B_2, \ldots$ are mutually exclusive events.
+\end{enumerate}
+\end{definition}
+Properties (1) and (2) are evident. For Property (3), suppose the sequence of events $B_1, B_2, \ldots$ is mutually exclusive. It follows that $(B_n \cap A) \cap (B_m \cap A) = \emptyset$ for $n \neq m$. Using this and the first of the distributive laws $(1.2.5)$ for countable unions, we have
+\begin{align*}
+P\left(\bigcup_{n=1}^{\infty} B_n | A\right) &= \frac{ P\left[\bigcup_{n=1}^{\infty} (B_n \cap A)\right] }{P(A)}\\
+&=  \sum_{n=1}^{\infty} \frac{P(B_n \cap A)} {P(A)} \\
+&= \sum_{n=1}^{\infty} P(B_n | A).
+\end{align*}
+
+Properties (1)--(3) are precisely the conditions that a probability set function must satisfy. Accordingly, $P(B|A)$ is a probability set function, defined for subsets of $A$. It may be called the conditional probability set function, relative to the hypothesis $A$, or the conditional probability set function, given $A$. It should be noted that this conditional probability set function, given $A$, is defined only when $P(A) > 0$.
+\begin{example}A hand of five cards is to be dealt at random without replacement from an ordinary deck of 52 playing cards. We want to calculate the conditional probability of drawing an all-spade hand ($B$) given the hypothesis that there are at least four spades in the hand ($A$). 
+
+Since $A \cap B = B$, we can directly calculate the conditional probability as:
+\[
+P(B|A) = \frac{P(B)}{P(A)} = \frac{{\binom{13}{5}/\binom{52}{5}}}{{\binom{13}{4}\binom{39}{1}/\binom{52}{5}}} = \frac{{\binom{13}{5}}}{{\binom{13}{4}\binom{39}{1}}}.
+\]
+
+Evaluating the expression, we have:
+\[
+P(B|A) = \frac{{\binom{13}{5}}}{{\binom{13}{4}\binom{39}{1}}} = \frac{{\frac{13!}{5!(13-5)!}}}{{\frac{13!}{4!(13-4)!}\frac{39!}{1!(39-1)!}}} = \frac{{4!9!}}{{5!8!}}\frac{{38!}}{{39!}} =0.0441.
+\]
+\end{example}
+
+From the definition of the conditional probability set function, we observe that
+\[ P(A \cap B) = P(A)P(B|A). \]
+This relation is frequently called the multiplication rule for probabilities.
+
+\begin{example}
+A bowl contains eight chips. Three of the chips are red and the remaining five are blue. Two chips are to be drawn successively, at random and without replacement. We want to compute the probability that the first draw results in a red chip (A) and that the second draw results in a blue chip (B). It is reasonable to assign the following probabilities:
+
+\[ P(A) = \frac{3}{8} \quad \text{and} \quad P(B|A) = \frac{5}{7}. \]
+
+Thus, under these assignments, we have \( P(A \cap B) = \left(\frac{3}{8}\right) \left(\frac{5}{7}\right) = \frac{15}{56} = 0.2679 \).
+\end{example}
+\begin{example}
+From an ordinary deck of playing cards, cards are to be drawn successively, at random and without replacement. The probability that the third spade appears on the sixth draw is computed as follows. Let $A$ be the event of two spades in the first five draws and let $B$ be the event of a spade on the sixth draw. Thus, the probability that we wish to compute is $P(A \cap B)$. It is reasonable to take:
+
+\[ P(A) = \frac{{\binom{13}{2} \binom{39}{3}}}{{\binom{52}{5}}} = 0.2743 \quad \text{and} \quad P(B|A) = \frac{11}{47} = 0.2340. \]
+
+The desired probability $P(A \cap B)$ is then the product of these two numbers, which to four decimal places is 0.0642.
+\end{example}
+The multiplication rule can be extended to three or more events. In the case of three events, we have, by using the multiplication rule for two events:
+
+\[ P(A \cap B \cap C) = P((A \cap B) \cap C) = P(A \cap B)P(C|A \cap B). \]
+
+But $P(A \cap B) = P(A)P(B|A)$. Hence, provided $P(A \cap B) > 0$, we have:
+
+\[ P(A \cap B \cap C) = P(A)P(B|A)P(C|A \cap B). \]
+
+Consider $k$ mutually exclusive and exhaustive events $A_1, A_2, \ldots, A_k$ such that $P(A_i) > 0$, $i = 1, 2, \ldots, k$; i.e., $A_1, A_2, \ldots, A_k$ form a partition of $C$. Here, the events $A_1, A_2, \ldots, A_k$ do not need to be equally likely. Let $B$ be another event such that $P(B) > 0$. Thus, $B$ occurs with one and only one of the events $A_1, A_2, \ldots, A_k$; that is,
+
+\[ B = B \cap (A_1 \cup A_2 \cup \ldots \cup A_k) = (B \cap A_1) \cup (B \cap A_2) \cup \ldots \cup (B \cap A_k). \]
+
+Since $B \cap A_i$, $i = 1, 2, \ldots, k$, are mutually exclusive, we have
+
+\[ P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_k). \]
+
+However, $P(B \cap A_i) = P(A_i)P(B|A_i)$, $i = 1, 2, \ldots, k$; so
+
+\[ P(B) = P(A_1)P(B|A_1) + P(A_2)P(B|A_2) + \cdots + P(A_k)P(B|A_k) = \sum_{i=1}^{k} P(A_i)P(B|A_i). \]
+
+\begin{theorem}[Bayes]
+Let $A_1, A_2, \ldots, A_k$ be events such that $P(A_i) > 0$, $i = 1, 2, \ldots, k$. Assume further that $A_1, A_2, \ldots, A_k$ form a partition of the sample space $C$. Let $B$ be any event. Then
+\begin{align}
+P(A_j|B) = \frac{P(A_j)P(B|A_j)}{\sum_{i=1}^{k} P(A_i)P(B|A_i)}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Based on the definition of conditional probability, we have
+\begin{align}
+P(A_j|B) &= \frac{P(A_j)P(B\cap A_j)}{P(B)} \\
+&= \frac{P(A_j)P(B|A_j)}{P(B)}
+\end{align}
+\end{proof}
+\begin{example}\label{bayes-example}
+Say it is known that bowl $A_1$ contains three red and seven blue chips and bowl $A_2$ contains eight red and two blue chips. All chips are identical in size and shape. A die is cast and bowl $A_1$ is selected if five or six spots show on the side that is up; otherwise, bowl $A_2$ is selected. For this situation, it seems reasonable to assign $P(A_1) = \frac{2}{6}$ and $P(A_2) = \frac{4}{6}$. The selected bowl is handed to another person and one chip is taken at random. Say that this chip is red, an event which we denote by $B$. By considering the contents of the bowls, it is reasonable to assign the conditional probabilities $P(B|A_1) = \frac{3}{10}$ and $P(B|A_2) = \frac{8}{10}$. Thus the conditional probability of bowl $A_1$, given that a red chip is drawn, is
+\begin{align}
+P(A_1|B) &= \frac{P(A_1)P(B|A_1)}{P(A_1)P(B|A_1) + P(A_2)P(B|A_2)} \\
+&= \frac{\frac{2}{6}\cdot\frac{3}{10}}{\frac{2}{6}\cdot\frac{3}{10} + \frac{4}{6}\cdot\frac{8}{10}} = \frac{3}{19}
+\end{align}
+In a similar manner, we have $P(A_2|B) = \frac{16}{19}$.
+\end{example}
+
+In Example \ref{bayes-example}, the probabilities $P(A_1) = \frac{2}{6}$ and $P(A_2) = \frac{4}{6}$ are called prior probabilities of $A_1$ and $A_2$, respectively, because they are known to be due to the random mechanism used to select the bowls. After the chip is taken and is observed to be red, the conditional probabilities $P(A_1|B) = \frac{3}{19}$ and $P(A_2|B) = \frac{16}{19}$ are called posterior probabilities. Since $A_2$ has a larger proportion of red chips than does $A_1$, it appeals to one’s intuition that $P(A_2|B)$ should be larger than $P(A_2)$ and, of course, $P(A_1|B)$ should be smaller than $P(A_1)$. That is, intuitively the chances of having bowl $A_2$ are better once that a red chip is observed than before a chip is taken. Bayes’ theorem provides a method of determining exactly what those probabilities are.
+\begin{example}
+Three plants, $A_1$, $A_2$, and $A_3$, produce respectively, 10\%, 50\%, and 40\% of a company’s output. Although plant $A_1$ is a small plant, its manager believes in high quality and only 1\% of its products are defective. The other two, $A_2$ and $A_3$, are worse and produce items that are 3\% and 4\% defective, respectively. All products are sent to a central warehouse. One item is selected at random and observed to be defective, say event B.
+
+The conditional probability that it comes from plant $A1$ is found as follows. It is natural to assign the respective prior probabilities of getting an item from the plants as $P(A_1) = 0.1$, $P(A_2) = 0.5$, and $P(A_3) = 0.4$, while the conditional probabilities of defective items are $P(B|A_1) = 0.01$, $P(B|A_2) = 0.03$, and $P(B|A_3) = 0.04$.
+
+Thus, the posterior probability of $A_1$, given a defective, is
+\[
+P(A_1|B) = \frac{P(A_1 \cap B)}{P(B)} = \frac{(0.10)(0.01)}{(0.1)(0.01) + (0.5)(0.03) + (0.4)(0.04)}
+\]
+This is much smaller than the prior probability $P(A_1) = \frac{1}{10}$. This is as it should be because the fact that the item is defective decreases the chances that it comes from the high-quality plant $A1$.
+\end{example}
+\subsection{Independence}
+\begin{definition}
+Let $A$ and $B$ be two events. We say that $A$ and $B$ are independent if $P(A \cap B) = P(A)P(B)$.
+\end{definition}
+Suppose $A$ and $B$ are independent events. Then the following three pairs of events are independent: $A^c$ and $B$, $A$ and $B^c$, and $A^c$ and $B^c$. We show the first and leave the other two to the exercises; see Exercise 1.4.11. 
+\begin{proof}
+Using the disjoint union, $B = (A^c \cap B) \cup (A \cap B)$, we have
+\[
+P(A^c \cap B) = P(B) - P(A \cap B) = P(B) - P(A)P(B) = [1 - P(A)]P(B) = P(A^c)P(B).
+\]
+Hence, $A^c$ and $B$ are also independent.    
+\end{proof}
+
+
+
+\begin{remark}
+Events that are independent are sometimes called statistically independent, stochastically independent, or independent in a probability sense. In most instances, we use independent without a modifier if there is no possibility of misunderstanding.
+\end{remark}
+
+\begin{example}
+A red die and a white die are cast in such a way that the numbers of spots on the two sides that are up are independent events. If $A$ represents a four on the red die and $B$ represents a three on the white die, with an equally likely assumption for each side, we assign $P(A) = \frac{1}{6}$ and $P(B) = \frac{1}{6}$. 
+
+Thus, from independence, the probability of the ordered pair (red = 4, white = 3) is
+\[
+P[(4, 3)] = \left(\frac{1}{6}\right)\left(\frac{1}{6}\right) = \frac{1}{36}.
+\]
+The probability that the sum of the up spots of the two dice equals seven is
+\[
+P[(1, 6), (2, 5), (3, 4), (4, 3), (5, 2), (6, 1)] = \frac{6}{36}.
+\]
+In a similar manner, it is easy to show that the probabilities of the sums of the upfaces 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 are, respectively,
+\[
+\frac{1}{36}, \frac{2}{36}, \frac{3}{36}, \frac{4}{36}, \frac{5}{36}, \frac{6}{36}, \frac{5}{36}, \frac{4}{36}, \frac{3}{36}, \frac{2}{36}, \frac{1}{36}.
+\]
+\end{example}
+Suppose now that we have three events, $A_1$, $A_2$, and $A_3$. We say that they are \bld{mutually independent} if and only if they are pairwise independent:
+\[
+P(A_1 \cap A_3) = P(A_1)P(A_3), \quad P(A_1 \cap A_2) = P(A_1)P(A_2), \quad P(A_2 \cap A_3) = P(A_2)P(A_3),
+\]
+and, moreover,
+\[
+P(A_1 \cap A_2 \cap A_3) = P(A_1)P(A_2)P(A_3).
+\]
+
+More generally, the $n$ events $A_1$, $A_2$, ..., $A_n$ are mutually independent if and only if for every collection of $k$ of these events, $2 \leq k \leq n$, and for every permutation $d_1$, $d_2$, ..., $d_k$ of $1$, $2$, ..., $k$,
+\[
+P(A_{d_1} \cap A_{d_2} \cap \ldots \cap A_{d_k}) = P(A_{d_1})P(A_{d_2}) \ldots P(A_{d_k}).
+\]
+In particular, if $A_1$, $A_2$, ..., $A_n$ are mutually independent, then
+\[
+P(A_1 \cap A_2 \cap \ldots \cap A_n) = P(A_1)P(A_2) \ldots P(A_n).
+\]
+Also, as with two sets, many combinations of these events and their complements are independent, such as:
+\begin{enumerate}
+    \item The events $A_1^c$ and $A_2 \cup A_3^c \cup A_4$ are independent,
+    \item The events $A_1 \cup A_2^c$, $A_3^c$ and $A_4 \cap A_5^c$ are mutually independent.
+\end{enumerate}
+If there is no possibility of misunderstanding, independent is often used without the modifier mutually when considering more than two events.
+
+\begin{example}
+Pairwise independence does not imply mutual independence. As an example, suppose we twice spin a fair spinner with the numbers $1$, $2$, $3$, and $4$. Let $A_1$ be the event that the sum of the numbers spun is $5$, let $A_2$ be the event that the first number spun is a $1$, and let $A_3$ be the event that the second number spun is a $4$. Then $P(A_i) = \frac{1}{4}$, $i = 1, 2, 3$, and for $i \neq j$, $P(A_i \cap A_j) = \frac{1}{16}$. So the three events are pairwise independent. But $A_1 \cap A_2 \cap A_3$ is the event that $(1, 4)$ is spun, which has probability $\frac{1}{16} \neq \frac{1}{64} = P(A_1)P(A_2)P(A_3)$. Hence the events $A_1$, $A_2$, and $A_3$ are not mutually independent.
+\end{example}
+
+We often perform a sequence of random experiments in such a way that the events associated with one of them are independent of the events associated with the others. For convenience, we refer to these events as outcomes of independent experiments, meaning that the respective events are independent. Thus we often refer to independent flips of a coin or independent casts of a die or, more generally, independent trials of some given random experiment.
+
+\begin{example}
+A coin is flipped independently several times. Let the event $A_i$ represent a head (H) on the $i$th toss; thus $A_i^c$ represents a tail (T). Assume that $A_i$ and $A_i^c$ are equally likely; that is, $P(A_i) = P(A_i^c) = \frac{1}{2}$. Thus the probability of an ordered sequence like HHTH is, from independence,
+\[
+P(A_1 \cap A_2 \cap A_3^c \cap A_4) = P(A_1)P(A_2)P(A_3^c)P(A_4) = \left(\frac{1}{2}\right)^4 = \frac{1}{16}.
+\]
+Similarly, the probability of observing the first head on the third flip is
+\[
+P(A_1^c \cap A_2^c \cap A_3) = P(A_1^c)P(A_2^c)P(A_3) = \left(\frac{1}{2}\right)^3 = \frac{1}{8}.
+\]
+Also, the probability of getting at least one head on four flips is
+\[
+P(A_1 \cup A_2 \cup A_3 \cup A_4) = 1 - P[(A_1 \cup A_2 \cup A_3 \cup A_4)^c] = 1 - P(A_1^c \cap A_2^c \cap A_3^c \cap A_4^c) = 1 - \left(\frac{1}{2}\right)^4 = \frac{15}{16}.
+\]
+See Exercise 1.4.13 to justify this last probability.
+\end{example}
+
+\begin{example}
+A computer system is built so that if component $K_1$ fails, it is bypassed and $K_2$ is used. If $K_2$ fails, then $K_3$ is used. Suppose that the probability that $K_1$ fails is $0.01$, that $K_2$ fails is $0.03$, and that $K_3$ fails is $0.08$. Moreover, we can assume that the failures are mutually independent events. Then the probability of failure of the system is
+\[
+(0.01)(0.03)(0.08) = 0.000024,
+\]
+as all three components would have to fail. Hence, the probability that the system does not fail is $1 - 0.000024 = 0.999976$.
+\end{example}
+
+\end{document}
